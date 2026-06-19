@@ -20,35 +20,35 @@ GENEROS = {
 GENERO_PARA_COD = {v: k for k, v in GENEROS.items()}
 
 FILMES_RAW = [
-    ("Velocidade Máxima",       0, 120, 7.8, 2019, 85),
-    ("Guerra Total",           0, 150, 6.5, 2021, 60),
-    ("Missão Impossível X",    0, 130, 8.2, 2023, 95),
-    ("Explosão Urbana",        0, 110, 5.9, 2018, 40),
+    ("Velozes e Furiosos",       0, 120, 7.8, 2019, 85),
+    ("Dunkirk",                  0, 150, 6.5, 2021, 60),
+    ("Hawaii 5-0",               0, 130, 8.2, 2023, 95),
+    ("Invasão à Casa Branca",    0, 110, 5.9, 2018, 40),
 
-    ("Risadas Garantidas",     1,  95, 7.0, 2020, 70),
-    ("Confusão em Família",    1, 100, 6.2, 2017, 50),
-    ("Tá Todo Mundo Louco",    1,  90, 8.0, 2022, 88),
-    ("Vizinhos Bagunceiros",   1, 105, 5.5, 2016, 35),
+    ("Piada Mortal",           1,  95, 7.0, 2020, 70),
+    ("Family Guy",             1, 100, 6.2, 2017, 50),
+    ("Projeto X",              1,  90, 8.0, 2022, 88),
+    ("O Pestinha",             1, 105, 5.5, 2016, 35),
 
-    ("Lágrimas do Passado",    2, 140, 8.5, 2021, 75),
+    ("Marley e Eu",            2, 140, 8.5, 2021, 75),
     ("Vida em Pedaços",        2, 125, 7.2, 2019, 55),
-    ("O Último Adeus",         2, 135, 9.0, 2023, 90),
+    ("A Culpa É das Estrelas", 2, 135, 9.0, 2023, 90),
     ("Caminhos Cruzados",      2, 115, 6.0, 2015, 30),
 
-    ("Sombras na Noite",       3,  90, 6.8, 2020, 65),
-    ("A Casa Amaldiçoada",     3, 100, 7.5, 2022, 80),
-    ("Grito Silencioso",       3,  85, 5.0, 2014, 25),
-    ("Pesadelo Real",          3,  95, 8.1, 2023, 92),
+    ("Até a morte",            3,  90, 6.8, 2020, 65),
+    ("A Cabana",               3, 100, 7.5, 2022, 80),
+    ("Panico 5",               3,  85, 5.0, 2014, 25),
+    ("Eu sei oque vc fez verão passado",          3,  95, 8.1, 2023, 92),
 
     ("Amor à Primeira Vista",  4, 105, 7.6, 2021, 78),
     ("Cartas Não Enviadas",    4, 110, 8.3, 2022, 84),
     ("Verão Inesquecível",     4,  98, 6.4, 2018, 45),
     ("Reencontro",             4, 102, 5.8, 2016, 38),
 
-    ("Aventura Mágica",        5,  90, 8.7, 2023, 96),
-    ("O Reino Encantado",      5,  95, 7.4, 2020, 70),
-    ("Pequenos Heróis",        5,  88, 6.1, 2017, 42),
-    ("Mundo dos Sonhos",       5,  92, 9.2, 2023, 98),
+    ("Hobbit",                 5,  90, 8.7, 2023, 96),
+    ("Magico de Oz",           5,  95, 7.4, 2020, 70),
+    ("Pequenos Espiões",       5,  88, 6.1, 2017, 42),
+    ("Peter Pan",              5,  92, 9.2, 2023, 98),
 ]
 
 df = pd.DataFrame(
