@@ -1,0 +1,4 @@
+1- para ativar o frontend precisa baixar uma extensão chamada Live Server (python)
+2- o site foi postado via netifly (dominio: https://cinema-escolhas.netlify.app)
+3- Github https://github.com/GiovanniTorino/cinema-escolhas
+4- backend armazenado pelo https://railway.com/
