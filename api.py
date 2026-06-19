@@ -40,10 +40,10 @@ FILMES_RAW = [
     ("Panico 5",               3,  85, 5.0, 2014, 25),
     ("Eu sei oque vc fez verão passado",          3,  95, 8.1, 2023, 92),
 
-    ("Amor à Primeira Vista",  4, 105, 7.6, 2021, 78),
-    ("Cartas Não Enviadas",    4, 110, 8.3, 2022, 84),
-    ("Verão Inesquecível",     4,  98, 6.4, 2018, 45),
-    ("Reencontro",             4, 102, 5.8, 2016, 38),
+    ("Amor & Outras Drogas",   4, 105, 7.6, 2021, 78),
+    ("Amor à Queima-Roupa",    4, 110, 8.3, 2022, 84),
+    ("Spring Breakers",        4,  98, 6.4, 2018, 45),
+    ("Obsessão",               4, 102, 5.8, 2016, 38),
 
     ("Hobbit",                 5,  90, 8.7, 2023, 96),
     ("Magico de Oz",           5,  95, 7.4, 2020, 70),
