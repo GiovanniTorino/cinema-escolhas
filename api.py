@@ -30,10 +30,10 @@ FILMES_RAW = [
     ("Projeto X",              1,  90, 8.0, 2022, 88),
     ("O Pestinha",             1, 105, 5.5, 2016, 35),
 
-    ("Marley e Eu",            2, 140, 8.5, 2021, 75),
-    ("Vida em Pedaços",        2, 125, 7.2, 2019, 55),
-    ("A Culpa É das Estrelas", 2, 135, 9.0, 2023, 90),
-    ("Caminhos Cruzados",      2, 115, 6.0, 2015, 30),
+    ("Marley e Eu",             2, 140, 8.5, 2021, 75),
+    ("Resgate do soldado Ryan", 2, 125, 7.2, 2019, 55),
+    ("A Culpa É das Estrelas",  2, 135, 9.0, 2023, 90),
+    ("O ultimo Homem",          2, 115, 6.0, 2015, 30),
 
     ("Até a morte",            3,  90, 6.8, 2020, 65),
     ("A Cabana",               3, 100, 7.5, 2022, 80),
