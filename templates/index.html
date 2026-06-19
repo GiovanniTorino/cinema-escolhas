@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cine Escolha — Qual filme vamos ver?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#15100c;
+    --bg-soft:#1e160f;
+    --panel:#241a12;
+    --velvet:#7a1f2b;
+    --velvet-light:#a52e3d;
+    --gold:#e8b649;
+    --gold-dim:#a07a2f;
+    --cream:#f3e9d8;
+    --muted:#b8a98e;
+    --teal:#3c8c7e;
+    --line:#3a2c1d;
+    --radius:14px;
+    --shadow: 0 18px 40px -12px rgba(0,0,0,0.6);
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(122,31,43,0.25), transparent 55%),
+      var(--bg);
+    color:var(--cream);
+    font-family:'Work Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:var(--gold);}
+
+  .wrap{
+    max-width:760px;
+    margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  
+  .marquee{
+    position:relative;
+    padding:46px 20px 34px;
+    text-align:center;
+    overflow:hidden;
+  }
+
+  .bulb-row{
+    position:absolute;
+    left:0; right:0;
+    height:10px;
+    display:flex;
+    justify-content:space-between;
+    padding:0 6px;
+  }
+  .bulb-row.top{top:14px;}
+  .bulb-row.bottom{bottom:10px;}
+
+  .bulb{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--gold-dim);
+    box-shadow:0 0 4px rgba(232,182,73,0.3);
+    animation: chase 1.6s infinite;
+  }
+
+  @keyframes chase{
+    0%, 100% { background:var(--gold-dim); box-shadow:0 0 4px rgba(232,182,73,0.25);}
+    50% { background:var(--gold); box-shadow:0 0 10px rgba(232,182,73,0.9);}
+  }
+
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin:18px 0 10px;
+  }
+
+  h1.title{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    font-size:clamp(40px, 9vw, 64px);
+    letter-spacing:0.01em;
+    line-height:0.95;
+    margin:0;
+    color:var(--gold);
+    text-shadow: 0 0 18px rgba(232,182,73,0.25);
+  }
+
+  .subtitle{
+    margin:14px auto 0;
+    max-width:420px;
+    color:var(--muted);
+    font-size:15px;
+    line-height:1.5;
+  }
+
+
+  .step{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 22px;
+    margin-top:18px;
+    box-shadow:var(--shadow);
+  }
+
+  .step-head{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:16px;
+  }
+
+  .step-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--bg);
+    background:var(--gold);
+    border-radius:999px;
+    width:26px;height:26px;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+    font-weight:600;
+  }
+
+  .step-title{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    font-size:19px;
+    letter-spacing:0.02em;
+    color:var(--cream);
+  }
+
+  .step-hint{
+    font-size:13px;
+    color:var(--muted);
+    margin:0 0 16px 38px;
+  }
+
+  
+  .genre-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:10px;
+  }
+  @media (max-width:520px){
+    .genre-grid{grid-template-columns:repeat(2, 1fr);}
+  }
+
+  .chip{
+    border:1px solid var(--line);
+    background:var(--bg-soft);
+    color:var(--cream);
+    font-family:'Work Sans', sans-serif;
+    font-weight:600;
+    font-size:14px;
+    padding:13px 10px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:border-color .15s, background .15s, transform .08s;
+  }
+  .chip:hover{border-color:var(--gold-dim);}
+  .chip:active{transform:scale(0.98);}
+  .chip.selected{
+    background:var(--velvet);
+    border-color:var(--gold);
+    color:var(--gold);
+  }
+  .chip:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+
+
+  .toggle-row{
+    display:flex;
+    gap:10px;
+  }
+  .pill{
+    flex:1;
+    border:1px solid var(--line);
+    background:var(--bg-soft);
+    color:var(--muted);
+    font-family:'Work Sans', sans-serif;
+    font-weight:600;
+    font-size:14px;
+    padding:13px 10px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s, background .15s;
+  }
+  .pill.selected{
+    background:var(--teal);
+    border-color:var(--teal);
+    color:#08211c;
+  }
+  .pill:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+
+  /* slider */
+  .slider-block{margin-top:18px;}
+  .slider-readout{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:8px;
+  }
+  .slider-readout .label{font-size:13px; color:var(--muted);}
+  .slider-readout .value{
+    font-family:'JetBrains Mono', monospace;
+    font-size:20px;
+    color:var(--gold);
+  }
+  input[type="range"]{
+    width:100%;
+    accent-color:var(--gold);
+    height:4px;
+    background:var(--line);
+  }
+
+  .submit-btn{
+    width:100%;
+    margin-top:22px;
+    padding:16px;
+    border:none;
+    border-radius:10px;
+    background:var(--velvet);
+    color:var(--gold);
+    font-family:'Anton', sans-serif;
+    font-size:17px;
+    letter-spacing:0.04em;
+    cursor:pointer;
+    position:relative;
+    transition:background .15s, transform .08s;
+  }
+  .submit-btn:hover{background:var(--velvet-light);}
+  .submit-btn:active{transform:scale(0.99);}
+  .submit-btn:disabled{opacity:0.55; cursor:wait;}
+  .submit-btn:focus-visible{outline:2px solid var(--gold); outline-offset:3px;}
+
+ 
+  .results{
+    margin-top:30px;
+  }
+  .results-head{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:0 0 14px 4px;
+  }
+
+  .status-msg{
+    background:var(--bg-soft);
+    border:1px dashed var(--line);
+    border-radius:10px;
+    padding:20px;
+    color:var(--muted);
+    font-size:14px;
+    text-align:center;
+    line-height:1.5;
+  }
+  .status-msg.error{border-color:var(--velvet-light); color:#e7a5ab;}
+
+  .ticket{
+    display:flex;
+    background:var(--bg-soft);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    margin-bottom:14px;
+    position:relative;
+    animation: rise .35s ease both;
+  }
+  @keyframes rise{
+    from{opacity:0; transform:translateY(8px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .ticket-stub{
+    width:64px;
+    flex-shrink:0;
+    background:var(--velvet);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    border-right:1px dashed rgba(243,233,216,0.35);
+  }
+  .ticket-stub::before, .ticket-stub::after{
+    content:"";
+    position:absolute;
+    width:14px;height:14px;
+    background:var(--bg);
+    border-radius:50%;
+    right:-8px;
+  }
+  .ticket-stub::before{top:-7px;}
+  .ticket-stub::after{bottom:-7px;}
+
+  .ticket-stub span{
+    writing-mode:vertical-rl;
+    transform:rotate(180deg);
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.18em;
+    color:var(--gold);
+    text-transform:uppercase;
+  }
+
+  .ticket-body{
+    flex:1;
+    padding:16px 18px;
+  }
+
+  .ticket-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
+  }
+
+  .ticket-title{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    font-size:18px;
+    color:var(--cream);
+    line-height:1.15;
+  }
+
+  .ticket-genre{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin-top:4px;
+  }
+
+  .ticket-meta{
+    display:flex;
+    gap:16px;
+    margin-top:12px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+  .ticket-meta b{color:var(--cream); font-weight:600;}
+
+  .score-wrap{
+    margin-top:12px;
+  }
+  .score-label{
+    display:flex;
+    justify-content:space-between;
+    font-size:11px;
+    color:var(--muted);
+    margin-bottom:4px;
+    font-family:'JetBrains Mono', monospace;
+  }
+  .score-bar{
+    height:5px;
+    border-radius:999px;
+    background:var(--line);
+    overflow:hidden;
+  }
+  .score-fill{
+    height:100%;
+    background:linear-gradient(90deg, var(--teal), var(--gold));
+    border-radius:999px;
+    transition:width .5s ease;
+  }
+
+  footer{
+    text-align:center;
+    margin-top:50px;
+    font-size:12px;
+    color:var(--line);
+  }
+  footer code{color:var(--muted);}
+
+  @media (prefers-reduced-motion: reduce){
+    .bulb{animation:none; background:var(--gold);}
+    .ticket{animation:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="marquee">
+    <div class="bulb-row top" id="bulbsTop"></div>
+    <p class="eyebrow">Sessão de hoje</p>
+    <h1 class="title">CINE ESCOLHA</h1>
+    <p class="subtitle">Não sabe o que assistir? Escolha o gênero e como prefere decidir — pela duração ou pela avaliação. A gente recomenda.</p>
+    <div class="bulb-row bottom" id="bulbsBottom"></div>
+  </header>
+
+ 
+  <section class="step">
+    <div class="step-head">
+      <span class="step-num">1</span>
+      <span class="step-title">Escolha o gênero</span>
+    </div>
+    <p class="step-hint">Toque no tipo de filme que combina com a sua noite.</p>
+    <div class="genre-grid" id="genreGrid"></div>
+  </section>
+
+ 
+  <section class="step">
+    <div class="step-head">
+      <span class="step-num">2</span>
+      <span class="step-title">Como prefere decidir?</span>
+    </div>
+    <p class="step-hint">Pela duração da sessão ou pela nota do filme.</p>
+    <div class="toggle-row">
+      <button class="pill selected" data-criterio="duracao">⏱ Duração</button>
+      <button class="pill" data-criterio="avaliacao">★ Avaliação</button>
+    </div>
+
+    <div class="slider-block" id="duracaoBlock">
+      <div class="slider-readout">
+        <span class="label">Duração máxima aceitável</span>
+        <span class="value" id="duracaoValue">130 min</span>
+      </div>
+      <input type="range" id="duracaoSlider" min="60" max="160" step="5" value="130">
+    </div>
+
+    <div class="slider-block" id="avaliacaoBlock" style="display:none;">
+      <div class="slider-readout">
+        <span class="label">Avaliação mínima desejada</span>
+        <span class="value" id="avaliacaoValue">7.0</span>
+      </div>
+      <input type="range" id="avaliacaoSlider" min="0" max="10" step="0.1" value="7.0">
+    </div>
+  </section>
+
+ 
+  <section class="step">
+    <div class="step-head">
+      <span class="step-num">3</span>
+      <span class="step-title">Sua sessão</span>
+    </div>
+    <p class="step-hint">Buscamos o filme certo na base, ordenado pelo seu critério.</p>
+    <button class="submit-btn" id="submitBtn">BUSCAR RECOMENDAÇÃO</button>
+  </section>
+
+  <section class="results" id="resultsSection" style="display:none;">
+    <p class="results-head">Recomendações para você</p>
+    <div id="resultsList"></div>
+  </section>
+
+  <footer>
+    <code id="apiBaseLabel"></code><code></code>
+  </footer>
+
+</div>
+
+<script>
+  const API_BASE = "http://localhost:5000";
+  document.getElementById("apiBaseLabel").textContent = API_BASE;
+
+  const GENEROS = ["Ação", "Comédia", "Drama", "Terror", "Romance", "Animação"];
+
+  const state = {
+    genero: null,
+    criterio: "duracao",
+    duracaoMax: 130,
+    avaliacaoMin: 7.0,
+  };
+
+ 
+  function montarBulbos(container, total){
+    for(let i=0;i<total;i++){
+      const b = document.createElement("div");
+      b.className = "bulb";
+      b.style.animationDelay = (i * 0.08) + "s";
+      container.appendChild(b);
+    }
+  }
+  montarBulbos(document.getElementById("bulbsTop"), 22);
+  montarBulbos(document.getElementById("bulbsBottom"), 22);
+
+
+  const genreGrid = document.getElementById("genreGrid");
+  GENEROS.forEach(g => {
+    const btn = document.createElement("button");
+    btn.className = "chip";
+    btn.textContent = g;
+    btn.addEventListener("click", () => {
+      state.genero = g;
+      document.querySelectorAll(".chip").forEach(c => c.classList.remove("selected"));
+      btn.classList.add("selected");
+    });
+    genreGrid.appendChild(btn);
+  });
+
+  
+  const duracaoBlock = document.getElementById("duracaoBlock");
+  const avaliacaoBlock = document.getElementById("avaliacaoBlock");
+
+  document.querySelectorAll(".pill").forEach(pill => {
+    pill.addEventListener("click", () => {
+      document.querySelectorAll(".pill").forEach(p => p.classList.remove("selected"));
+      pill.classList.add("selected");
+      state.criterio = pill.dataset.criterio;
+      if(state.criterio === "duracao"){
+        duracaoBlock.style.display = "block";
+        avaliacaoBlock.style.display = "none";
+      } else {
+        duracaoBlock.style.display = "none";
+        avaliacaoBlock.style.display = "block";
+      }
+    });
+  });
+
+  const duracaoSlider = document.getElementById("duracaoSlider");
+  const duracaoValue = document.getElementById("duracaoValue");
+  duracaoSlider.addEventListener("input", () => {
+    state.duracaoMax = Number(duracaoSlider.value);
+    duracaoValue.textContent = state.duracaoMax + " min";
+  });
+
+  const avaliacaoSlider = document.getElementById("avaliacaoSlider");
+  const avaliacaoValue = document.getElementById("avaliacaoValue");
+  avaliacaoSlider.addEventListener("input", () => {
+    state.avaliacaoMin = Number(avaliacaoSlider.value);
+    avaliacaoValue.textContent = state.avaliacaoMin.toFixed(1);
+  });
+
+ 
+  const submitBtn = document.getElementById("submitBtn");
+  const resultsSection = document.getElementById("resultsSection");
+  const resultsList = document.getElementById("resultsList");
+
+  function mostrarStatus(texto, isError){
+    resultsSection.style.display = "block";
+    resultsList.innerHTML = `<div class="status-msg ${isError ? "error" : ""}">${texto}</div>`;
+  }
+
+  function renderTickets(filmes){
+    resultsSection.style.display = "block";
+    resultsList.innerHTML = "";
+    filmes.forEach((f, i) => {
+      const scorePct = Math.round(f.score_recomendacao * 100);
+      const div = document.createElement("div");
+      div.className = "ticket";
+      div.style.animationDelay = (i * 0.06) + "s";
+      div.innerHTML = `
+        <div class="ticket-stub"><span>TICKET</span></div>
+        <div class="ticket-body">
+          <div class="ticket-top">
+            <div>
+              <div class="ticket-title">${f.titulo}</div>
+              <div class="ticket-genre">${f.genero} · ${f.ano}</div>
+            </div>
+          </div>
+          <div class="ticket-meta">
+            <span>⏱ <b>${f.duracao_min} min</b></span>
+            <span>★ <b>${f.avaliacao.toFixed(1)}</b></span>
+          </div>
+          <div class="score-wrap">
+            <div class="score-label"><span>Compatibilidade prevista</span><span>${scorePct}%</span></div>
+            <div class="score-bar"><div class="score-fill" style="width:${scorePct}%"></div></div>
+          </div>
+        </div>
+      `;
+      resultsList.appendChild(div);
+    });
+  }
+
+  submitBtn.addEventListener("click", async () => {
+    if(!state.genero){
+      mostrarStatus("Escolha um gênero antes de buscar a sessão.", true);
+      return;
+    }
+
+    const payload = { genero: state.genero, criterio: state.criterio };
+    if(state.criterio === "duracao"){
+      payload.duracao_max = state.duracaoMax;
+    } else {
+      payload.avaliacao_min = state.avaliacaoMin;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "BUSCANDO...";
+    mostrarStatus("Consultando a base de filmes...", false);
+
+    try{
+      const resp = await fetch(`${API_BASE}/recomendar`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await resp.json();
+
+      if(!resp.ok){
+        mostrarStatus(data.erro || "Não foi possível processar a recomendação.", true);
+        return;
+      }
+
+      if(!data.recomendacoes || data.recomendacoes.length === 0){
+        mostrarStatus(data.mensagem || "Nenhum filme encontrado para esse critério. Tente afrouxar o filtro.", false);
+        return;
+      }
+
+      renderTickets(data.recomendacoes);
+
+    } catch(err){
+      mostrarStatus("Não foi possível conectar à API. Verifique se o servidor Flask está rodando em " + API_BASE + ".", true);
+    } finally{
+      submitBtn.disabled = false;
+      submitBtn.textContent = "BUSCAR RECOMENDAÇÃO";
+    }
+  });
+</script>
+
+</body>
+</html>
